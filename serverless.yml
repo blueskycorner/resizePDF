@@ -1,0 +1,88 @@
+# Welcome to Serverless!
+#
+# This file is the main config file for your service.
+# It's very minimal at this point and uses default values.
+# You can always add more config options for more control.
+# We've included some commented out config examples here.
+# Just uncomment any of them to get that config option.
+#
+# For full config options, check the docs:
+#    docs.serverless.com
+#
+# Happy Coding!
+
+service: resizePDF # NOTE: update this with your service name
+
+plugins:
+  - serverless-python-requirements
+  - serverless-pseudo-parameters
+
+provider:
+  name: aws
+  runtime: python3.7
+  stage: ${opt:stage, 'dev'}
+
+custom:
+  resizePDFBucketNameBase: resize-and-pdf
+  
+# you can add statements to the Lambda function's IAM Role here
+#  iamRoleStatements:
+#    - Effect: "Allow"
+#      Action:
+#        - "s3:ListBucket"
+#      Resource: { "Fn::Join" : ["", ["arn:aws:s3:::", { "Ref" : "ServerlessDeploymentBucket" } ] ]  }
+#    - Effect: "Allow"
+#      Action:
+#        - "s3:PutObject"
+#      Resource:
+#        Fn::Join:
+#          - ""
+#          - - "arn:aws:s3:::"
+#            - "Ref" : "ServerlessDeploymentBucket"
+#            - "/*"
+
+# you can define service wide environment variables here
+#  environment:
+#    variable1: value1
+
+# you can add packaging information here
+#package:
+#  include:
+#    - include-me.py
+#    - include-me-dir/**
+#  exclude:
+#    - exclude-me.py
+#    - exclude-me-dir/**
+
+functions:
+  buildSignedUrlUpload:
+    handler: handler.buildSignedUrlUpload
+    events:
+      - http:
+          path: buildSignedUrlUpload
+          method: get
+
+    environment:
+      bucketName: !Ref ResizePDFBucket
+
+# you can add CloudFormation resource templates here
+resources:
+  Mappings:
+    envValues:
+      dev:
+        resizePDFBucketName: ${self:custom.resizePDFBucketNameBase}-dev
+      prod:
+        resizePDFBucketName: ${self:custom.resizePDFBucketNameBase}-prod
+  Resources:
+    ResizePDFBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: 
+          Fn::FindInMap:
+            - envValues
+            - ${self:provider.stage}
+            - resizePDFBucketName
+#  Outputs:
+#     NewOutput:
+#       Description: "Description for the output"
+#       Value: "Some output value"
