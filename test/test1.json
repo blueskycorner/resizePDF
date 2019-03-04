@@ -1,3 +1,115 @@
 {
-    "key1": "val1"
-}
+        "resource": "/buildSignedUrlUpload",
+        "path": "/buildSignedUrlUpload",
+        "httpMethod": "GET",
+        "headers": {
+            "Accept": "*/*",
+            "Accept-Encoding": "gzip, deflate",
+            "CloudFront-Forwarded-Proto": "https",
+            "CloudFront-Is-Desktop-Viewer": "true",
+            "CloudFront-Is-Mobile-Viewer": "false",
+            "CloudFront-Is-SmartTV-Viewer": "false",
+            "CloudFront-Is-Tablet-Viewer": "false",
+            "CloudFront-Viewer-Country": "FR",
+            "Host": "0wqwlvpx17.execute-api.us-east-1.amazonaws.com",
+            "User-Agent": "PostmanRuntime/7.6.0",
+            "Via": "1.1 f9744c6213b3c223fffdbaa0d5c76cc6.cloudfront.net (CloudFront)",
+            "X-Amz-Cf-Id": "o2fGyapKyD_BEN0O60fCXT-bKClwuX4zr0emqpHCJ0zgJtRyuv3NXQ==",
+            "X-Amzn-Trace-Id": "Root=1-5c7d0236-faaf19504672fcf4d8d9c296",
+            "X-Forwarded-For": "90.102.110.89, 52.46.15.5",
+            "X-Forwarded-Port": "443",
+            "X-Forwarded-Proto": "https"
+        },
+        "multiValueHeaders": {
+            "Accept": [
+                "*/*"
+            ],
+            "Accept-Encoding": [
+                "gzip, deflate"
+            ],
+            "CloudFront-Forwarded-Proto": [
+                "https"
+            ],
+            "CloudFront-Is-Desktop-Viewer": [
+                "true"
+            ],
+            "CloudFront-Is-Mobile-Viewer": [
+                "false"
+            ],
+            "CloudFront-Is-SmartTV-Viewer": [
+                "false"
+            ],
+            "CloudFront-Is-Tablet-Viewer": [
+                "false"
+            ],
+            "CloudFront-Viewer-Country": [
+                "FR"
+            ],
+            "Host": [
+                "0wqwlvpx17.execute-api.us-east-1.amazonaws.com"
+            ],
+            "User-Agent": [
+                "PostmanRuntime/7.6.0"
+            ],
+            "Via": [
+                "1.1 f9744c6213b3c223fffdbaa0d5c76cc6.cloudfront.net (CloudFront)"
+            ],
+            "X-Amz-Cf-Id": [
+                "o2fGyapKyD_BEN0O60fCXT-bKClwuX4zr0emqpHCJ0zgJtRyuv3NXQ=="
+            ],
+            "X-Amzn-Trace-Id": [
+                "Root=1-5c7d0236-faaf19504672fcf4d8d9c296"
+            ],
+            "X-Forwarded-For": [
+                "90.102.110.89, 52.46.15.5"
+            ],
+            "X-Forwarded-Port": [
+                "443"
+            ],
+            "X-Forwarded-Proto": [
+                "https"
+            ]
+        },
+        "queryStringParameters": {
+            "prefix": "test",
+            "filename": "test.jpg"
+        },
+        "multiValueQueryStringParameters": {
+            "prefix": [
+                "test1"
+            ]
+        },
+        "pathParameters": null,
+        "stageVariables": null,
+        "requestContext": {
+            "resourceId": "z93ur5",
+            "resourcePath": "/buildSignedUrlUpload",
+            "httpMethod": "GET",
+            "extendedRequestId": "WA1IjGjvoAMFltw=",
+            "requestTime": "04/Mar/2019:10:47:18 +0000",
+            "path": "/dev/buildSignedUrlUpload",
+            "accountId": "315777477680",
+            "protocol": "HTTP/1.1",
+            "stage": "dev",
+            "domainPrefix": "0wqwlvpx17",
+            "requestTimeEpoch": 1551696438799,
+            "requestId": "e1d7ea7f-3e6a-11e9-86ed-5180e3d89922",
+            "identity": {
+                "cognitoIdentityPoolId": null,
+                "accountId": null,
+                "cognitoIdentityId": null,
+                "caller": null,
+                "sourceIp": "90.102.110.89",
+                "accessKey": null,
+                "cognitoAuthenticationType": null,
+                "cognitoAuthenticationProvider": null,
+                "userArn": null,
+                "userAgent": "PostmanRuntime/7.6.0",
+                "user": null
+            },
+            "domainName": "0wqwlvpx17.execute-api.us-east-1.amazonaws.com",
+            "apiId": "0wqwlvpx17"
+        },
+        "body": null,
+        "isBase64Encoded": false
+    }

@@ -18,3 +18,7 @@ var/
 
 # Serverless directories
 .serverless
+
+#add
+node_modules/
+__pycache__/

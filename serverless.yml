@@ -16,14 +16,16 @@ service: resizePDF # NOTE: update this with your service name
 plugins:
   - serverless-python-requirements
   - serverless-pseudo-parameters
-
+  
 provider:
   name: aws
-  runtime: python3.7
+  runtime: python3.6
   stage: ${opt:stage, 'dev'}
 
 custom:
   resizePDFBucketNameBase: resize-and-pdf
+  pythonRequirements:
+    dockerizePip: false
   
 # you can add statements to the Lambda function's IAM Role here
 #  iamRoleStatements:
@@ -61,6 +63,10 @@ functions:
       - http:
           path: buildSignedUrlUpload
           method: get
+          request:
+            parameters:
+              querystrings:
+                prefix: true
 
     environment:
       bucketName: !Ref ResizePDFBucket
