@@ -34,9 +34,10 @@ def buildSignedUrlUpload(event, context):
             "isBase64Encoded": "false"
         }
     except Exception as e:
+        responseBody = {"error": str(e)}
         response = {
             "statusCode": 500,
-            "body": {"error": str(e)}
+            "body": json.dumps(responseBody)
         }
     
 

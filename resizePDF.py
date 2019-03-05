@@ -166,9 +166,10 @@ def resizePDF(event, context):
             "statusCode": 200
         }
     except Exception as e:
+        responseBody = {"error": str(e)}
         response = {
-        "statusCode": 500,
-        "body": {"error": str(e)}
+            "statusCode": 500,
+            "body": json.dumps(responseBody)
         }
 
     return response
