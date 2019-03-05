@@ -1,9 +1,9 @@
 import json
 import os
 import boto3
-import requests
 
 bucketNameParamName = "bucketName"
+tmpPathParamName = "tmpPath"
 bucketName = os.getenv(bucketNameParamName)
 s3 = boto3.client('s3')
 
