@@ -2,6 +2,10 @@ import json
 import os
 import boto3
 from fpdf import FPDF
+from email.mime.text import MIMEText
+from email.mime.application import MIMEApplication
+from email.mime.multipart import MIMEMultipart
+from botocore.exceptions import ClientError
 
 bucketNameParamName = "bucketName"
 tmpPathParamName = "tmpPath"
@@ -22,11 +26,92 @@ def buildPDF(filename, imagesList):
         print(e)
         raise e
     
+def sendEmail(emailFrom, emailTo, downloadUrl):
+   print("address: " + emailTo)
+   print("downloadUrl: " + downloadUrl)
+   
+   SENDER = emailFrom
+   RECIPIENT = emailTo
+   
+   # The subject line for the email.
+   SUBJECT = "Your PDF file is ready !"
+   
+   # The email body for recipients with non-HTML email clients.
+   BODY_TEXT = "Hi,\n\nHere is a link to download your file:\n" + downloadUrl + "\n\nHave a nice day."
+   
+   # The HTML body of the email.
+   BODY_HTML = """\
+   <html>
+   <head></head>
+   <body>
+   Hi,<br><br>
+   Here is a link to download your document: <a href="
+   """
+   
+   BODY_HTML += downloadUrl
+   
+   BODY_HTML += """\
+   ">Click here</a>
+   <br><br>
+   Have a nice day.<br>
+   </body>
+   </html>
+   """
+   
+   # The character encoding for the email.
+   CHARSET = "utf-8"
+   
+   # Create a new SES resource and specify a region.
+   client = boto3.client('ses')
+   
+   # Create a multipart/mixed parent container.
+   msg = MIMEMultipart('mixed')
+   # Add subject, from and to lines.
+   msg['Subject'] = SUBJECT 
+   msg['From'] = SENDER 
+   msg['To'] = RECIPIENT
+   
+   # Create a multipart/alternative child container.
+   msg_body = MIMEMultipart('alternative')
+   
+   # Encode the text and HTML content and set the character encoding. This step is
+   # necessary if you're sending a message with characters outside the ASCII range.
+   textpart = MIMEText(BODY_TEXT.encode(CHARSET), 'plain', CHARSET)
+   htmlpart = MIMEText(BODY_HTML.encode(CHARSET), 'html', CHARSET) 
+   
+   # Add the text and HTML parts to the child container.
+   msg_body.attach(textpart)
+   msg_body.attach(htmlpart)
+   
+   # Attach the multipart/alternative child container to the multipart/mixed
+   # parent container.
+   msg.attach(msg_body)
+   
+   #print(msg)
+   try:
+      #Provide the contents of the email.
+      response = client.send_raw_email(
+          Source=SENDER,
+          Destinations=[
+              RECIPIENT
+          ],
+          RawMessage={
+              'Data':msg.as_string(),
+          }
+          # ConfigurationSetName=CONFIGURATION_SET
+      )
+   # Display an error if something goes wrong.	
+   except ClientError as e:
+      print(e.response['Error']['Message'])
+   else:
+      print("Email sent! Message ID:")
+      print(response['MessageId'])
 
 def resizePDF(event, context):
     
     response = None
     try:
+        emailAddress = event['queryStringParameters']['emailAddress']
         prefix = event['queryStringParameters']['prefix']
         compression = event['queryStringParameters']['compression']
         tmpPath = os.getenv(tmpPathParamName)
@@ -74,9 +159,11 @@ def resizePDF(event, context):
             ExpiresIn=3600
         )
         
+        # Send the email
+        sendEmail(emailAddress, emailAddress, signedUrlDownload)
+        
         response = {
-        "statusCode": 200,
-        "body": {"signedUrlDownload": signedUrlDownload}
+            "statusCode": 200
         }
     except Exception as e:
         response = {

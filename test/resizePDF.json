@@ -72,7 +72,8 @@
         },
         "queryStringParameters": {
             "prefix": "prefix",
-            "compression": "50"
+            "compression": "50",
+            "emailAddress": "benjamin.ehlers@hardis.fr"
         },
         "multiValueQueryStringParameters": {
             "prefix": [
