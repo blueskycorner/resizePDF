@@ -6,4 +6,4 @@ phases:
       - pip install -U pytest
   build:
     commands:
-      - python3 -m pytest    
+      - python -m pytest    
