@@ -3,7 +3,9 @@ phases:
   install:
     commands:
       - pip install -r requirements.txt
+      - pip install boto3
       - pip install -U pytest
+      - sls plugin install -n serverless-python-requirements
   build:
     commands:
       - python -m pytest    

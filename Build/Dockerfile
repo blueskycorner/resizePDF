@@ -12,6 +12,8 @@
 
 FROM ubuntu:14.04.5
 
+ENV LANG="C.UTF-8"
+
 ENV DOCKER_BUCKET="download.docker.com" \
     DOCKER_VERSION="17.09.0-ce" \
     DOCKER_CHANNEL="stable" \
@@ -39,25 +41,26 @@ RUN set -ex \
     && ssh-keyscan -t rsa,dsa -H github.com >> ~/.ssh/known_hosts \
     && ssh-keyscan -t rsa,dsa -H bitbucket.org >> ~/.ssh/known_hosts \
     && chmod 600 ~/.ssh/known_hosts \
-    && apt-get install -y --no-install-recommends \
-       wget=1.15-* python=2.7.* python2.7-dev=2.7.* fakeroot=1.20-* ca-certificates \
-       tar=1.27.* gzip=1.6-* zip=3.0-* autoconf=2.69-* automake=1:1.14.* \
-       bzip2=1.0.* file=1:5.14-* g++=4:4.8.* gcc=4:4.8.* imagemagick=8:6.7.* \
-       libbz2-dev=1.0.* libc6-dev=2.19-* libcurl4-openssl-dev=7.35.* libdb-dev=1:5.3.* \
-       libevent-dev=2.0.* libffi-dev=3.1~* libgeoip-dev=1.6.* libglib2.0-dev=2.40.* \
-       libjpeg-dev=8c-* libkrb5-dev=1.12+* liblzma-dev=5.1.* \
-       libmagickcore-dev=8:6.7.* libmagickwand-dev=8:6.7.* libmysqlclient-dev=5.5.* \
-       libncurses5-dev=5.9+* libpng12-dev=1.2.* libpq-dev=9.3.* libreadline-dev=6.3-* \
-       libsqlite3-dev=3.8.* libssl-dev=1.0.* libtool=2.4.* libwebp-dev=0.4.* \
-       libxml2-dev=2.9.* libxslt1-dev=1.1.* libyaml-dev=0.1.* make=3.81-* \
-       patch=2.7.* xz-utils=5.1.* zlib1g-dev=1:1.2.* unzip=6.0-* curl=7.35.* \
-       e2fsprogs=1.42.* iptables=1.4.* xfsprogs=3.1.* xz-utils=5.1.* \
-       mono-devel less=458-* groff=1.22.* liberror-perl=0.17-* \
-       asciidoc=8.6.* build-essential=11.* bzr=2.6.* cvs=2:1.12.* cvsps=2.1-* docbook-xml=4.5-* docbook-xsl=1.78.* dpkg-dev=1.17.* \
-       libdbd-sqlite3-perl=1.40-* libdbi-perl=1.630-* libdpkg-perl=1.17.* libhttp-date-perl=6.02-* \
-       libio-pty-perl=1:1.08-* libserf-1-1=1.3.* libsvn-perl=1.8.* libsvn1=1.8.* libtcl8.6=8.6.* libtimedate-perl=2.3000-* \
-       libunistring0=0.9.* libxml2-utils=2.9.* libyaml-perl=0.84-* python-bzrlib=2.6.* python-configobj=4.7.* \
-       sgml-base=1.26+* sgml-data=2.0.* subversion=1.8.* tcl=8.6.* tcl8.6=8.6.* xml-core=0.13+* xmlto=0.0.* xsltproc=1.1.* \
+    && apt-get install -y --no-install-recommends wget=1.15-* fakeroot=1.20-* ca-certificates \
+        autoconf=2.69-* automake=1:1.14.* less=458-* groff=1.22.* \
+        bzip2=1.0.* file=1:5.14-* g++=4:4.8.* gcc=4:4.8.* imagemagick=8:6.7.* \
+        libbz2-dev=1.0.* libc6-dev=2.19-*  curl=7.35.* \
+        libdb-dev=1:5.3.* libevent-dev=2.0.* libffi-dev=3.1~* \
+        libgeoip-dev=1.6.* libglib2.0-dev=2.40.* libjpeg-dev=8c-* \
+        libkrb5-dev=1.12+* liblzma-dev=5.1.* libmagickcore-dev=8:6.7.* \
+        libmagickwand-dev=8:6.7.* libmysqlclient-dev=5.5.* libncurses5-dev=5.9+* \
+        libpng12-dev=1.2.* libpq-dev=9.3.* libreadline-dev=6.3-* libsqlite3-dev=3.8.* \
+        libssl-dev=1.0.* libtool=2.4.* libwebp-dev=0.4.* libxml2-dev=2.9.* \
+        libxslt1-dev=1.1.* libyaml-dev=0.1.* make=3.81-* patch=2.7.* xz-utils=5.1.* \
+        zlib1g-dev=1:1.2.* tcl=8.6.* tk=8.6.* \
+        e2fsprogs=1.42.* iptables=1.4.* xfsprogs=3.1.* xz-utils=5.1.* \
+        mono-devel liberror-perl=0.17-* unzip=6.0-*\
+        asciidoc=8.6.* build-essential=11.* bzr=2.6.* cvs=2:1.12.* cvsps=2.1-* docbook-xml=4.5-* docbook-xsl=1.78.* dpkg-dev=1.17.* \
+        gettext=0.18.* gettext-base=0.18.* libapr1=1.5.* libaprutil1=1.5.* libasprintf0c2=0.18.*  \
+        libdbd-sqlite3-perl=1.40-* libdbi-perl=1.630-* libdpkg-perl=1.17.* libhttp-date-perl=6.02-* \
+        libio-pty-perl=1:1.08-* libserf-1-1=1.3.* libsvn-perl=1.8.* libsvn1=1.8.* libtcl8.6=8.6.* libtimedate-perl=2.3000-* \
+        libunistring0=0.9.* libxml2-utils=2.9.* libyaml-perl=0.84-* python-bzrlib=2.6.* python-configobj=4.7.* \
+        sgml-base=1.26+* sgml-data=2.0.* subversion=1.8.* tcl=8.6.* tcl8.6=8.6.* xml-core=0.13+* xmlto=0.0.* xsltproc=1.1.* \
     && rm -rf /var/lib/apt/lists/* \
     && apt-get clean
 
@@ -88,18 +91,71 @@ RUN set -ex \
 # Ensure docker-compose works
     && docker-compose version
 
-# Install dependencies by all python images equivalent to buildpack-deps:jessie
-# on the public repos.
-
-RUN set -ex \
-    && wget "https://bootstrap.pypa.io/2.6/get-pip.py" -O /tmp/get-pip.py \
-    && python /tmp/get-pip.py \
-    && pip install awscli==1.* \
-    && rm -fr /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
 VOLUME /var/lib/docker
 
 COPY dockerd-entrypoint.sh /usr/local/bin/
+
+ENV PATH="/usr/local/bin:$PATH" \
+    GPG_KEY="0D96DF4D4110E5C43FBFB17F2D347EA6AA65421D" \
+    PYTHON_VERSION="3.6.5" \
+    PYTHON_PIP_VERSION="10.0.0" \
+    LC_ALL=C.UTF-8 \
+    LANG=C.UTF-8
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        tcl-dev tk-dev \
+    && rm -rf /var/lib/apt/lists/* \
+    \
+    && wget -O python.tar.xz "https://www.python.org/ftp/python/${PYTHON_VERSION%%[a-z]*}/Python-$PYTHON_VERSION.tar.xz" \
+	&& wget -O python.tar.xz.asc "https://www.python.org/ftp/python/${PYTHON_VERSION%%[a-z]*}/Python-$PYTHON_VERSION.tar.xz.asc" \
+	&& export GNUPGHOME="$(mktemp -d)" \
+	&& (gpg --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys "$GPG_KEY" \
+        || gpg --keyserver pgp.mit.edu --recv-keys "$GPG_KEY" \
+        || gpg --keyserver keyserver.ubuntu.com --recv-keys "$GPG_KEY") \
+	&& gpg --batch --verify python.tar.xz.asc python.tar.xz \
+	&& rm -r "$GNUPGHOME" python.tar.xz.asc \
+	&& mkdir -p /usr/src/python \
+	&& tar -xJC /usr/src/python --strip-components=1 -f python.tar.xz \
+	&& rm python.tar.xz \
+	\
+	&& cd /usr/src/python \
+	&& ./configure \
+		--enable-loadable-sqlite-extensions \
+		--enable-shared \
+	&& make -j$(nproc) \
+	&& make install \
+	&& ldconfig \
+	\
+# explicit path to "pip3" to ensure distribution-provided "pip3" cannot interfere
+	&& if [ ! -e /usr/local/bin/pip3 ]; then : \
+		&& wget -O /tmp/get-pip.py 'https://bootstrap.pypa.io/get-pip.py' \
+		&& python3 /tmp/get-pip.py "pip==$PYTHON_PIP_VERSION" \
+		&& rm /tmp/get-pip.py \
+	; fi \
+# we use "--force-reinstall" for the case where the version of pip we're trying to install is the same as the version bundled with Python
+# ("Requirement already up-to-date: pip==8.1.2 in /usr/local/lib/python3.6/site-packages")
+# https://github.com/docker-library/python/pull/143#issuecomment-241032683
+	&& pip3 install --no-cache-dir --upgrade --force-reinstall "pip==$PYTHON_PIP_VERSION" \
+        && pip install awscli==1.* boto3 pipenv virtualenv --no-cache-dir \
+# then we use "pip list" to ensure we don't have more than one pip version installed
+# https://github.com/docker-library/python/pull/100
+	&& [ "$(pip list |tac|tac| awk -F '[ ()]+' '$1 == "pip" { print $2; exit }')" = "$PYTHON_PIP_VERSION" ] \
+	\
+	&& find /usr/local -depth \
+		\( \
+			\( -type d -a -name test -o -name tests \) \
+			-o \
+			\( -type f -a -name '*.pyc' -o -name '*.pyo' \) \
+		\) -exec rm -rf '{}' + \
+	&& apt-get purge -y --auto-remove tcl-dev tk-dev \
+	&& rm -rf /usr/src/python ~/.cache \
+	&& cd /usr/local/bin \
+	&& { [ -e easy_install ] || ln -s easy_install-* easy_install; } \
+	&& ln -s idle3 idle \
+	&& ln -s pydoc3 pydoc \
+	&& ln -s python3 python \
+	&& ln -s python3-config python-config \
+        && rm -fr /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Install Node Dependencies
 ENV NODE_VERSION="10.14.1"
@@ -136,9 +192,11 @@ RUN set -ex \
 
 RUN npm set unsafe-perm true
 
-CMD [ "node" ]
+CMD [ "python3" ]
 
 # Install Serverless Framework
 
 RUN set -ex \
-	&& npm install -g serverless
+    && npm install -g serverless \
+	&& npm i serverless-pseudo-parameters \
+	&& npm i serverless-python-requirements
