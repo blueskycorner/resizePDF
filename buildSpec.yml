@@ -14,4 +14,4 @@ phases:
   post_build:
     commands:
       - chmod +x integrationTest.sh
-      - ./integrationTest
+      - ./integrationTest.sh
