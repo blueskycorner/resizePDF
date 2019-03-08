@@ -32,7 +32,7 @@ def integration(serviceEndpoint):
         
         PARAMS = {'prefix':id, 'compression': compression, 'emailAddress': emailAddress}
         r = requests.get(url = resizePDF_URL, params = PARAMS)
-        assert r.status_code != 200, "resizePDF http call didn't return 200 status code"
+        assert r.status_code == 200, "resizePDF http call didn't return 200 status code"
         
         data = r.json()
         signedUrlDownload = data['signedUrlDownload']
