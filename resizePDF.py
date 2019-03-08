@@ -162,8 +162,12 @@ def resizePDF(event, context):
         # Send the email
         sendEmail(emailAddress, emailAddress, signedUrlDownload)
         
+        responseBody = {"signedUrlDownload": signedUrlDownload}
         response = {
-            "statusCode": 200
+            "statusCode": 200,
+            "body": json.dumps(responseBody),
+            "headers": {},
+            "isBase64Encoded": "false"
         }
     except Exception as e:
         responseBody = {"error": str(e)}

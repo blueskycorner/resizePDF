@@ -86,6 +86,10 @@ resources:
             - envValues
             - ${self:provider.stage}
             - resizePDFBucketName
+        LifecycleConfiguration:
+          Rules:
+            - ExpirationInDays: 1
+              Status: Enabled
     resizePDFRole:
       Type: AWS::IAM::Role
       Properties:
@@ -162,8 +166,6 @@ resources:
                         - 'log-group:/aws/lambda/*:*:*'
                 - Effect: Allow
                   Action: # Gives permission to S3
-                    - s3:ListBucket
-                    - s3:GetObject
                     - s3:PutObject
                   Resource: 
                     - arn:aws:s3:::${self:custom.resizePDFBucketNameBase}-${self:provider.stage}
