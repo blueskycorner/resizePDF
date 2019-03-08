@@ -3,6 +3,7 @@ phases:
   install:
     commands:
       - pip install -r requirements.txt
+      - pip install -r requirementsTest.txt
       - pip install -U pytest
       - sls plugin install -n serverless-python-requirements
   pre_build:
