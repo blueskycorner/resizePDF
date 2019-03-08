@@ -21,6 +21,10 @@ provider:
   name: aws
   runtime: python3.6
   stage: ${opt:stage, 'dev'}
+  stackTags:
+    Application: resize-pdf
+  tags:
+    Application: resize-pdf
 
 custom:
   resizePDFBucketNameBase: resize-and-pdf
@@ -28,36 +32,6 @@ custom:
     dockerizePip: false
   DockerImageArn: !Sub '#{AWS::AccountId}.dkr.ecr.us-east-1.amazonaws.com/codebuild/python-serverless:latest'
   RepositoryName: test-deploy-serverless
-  DeploymentFilename: Deployment.zip
-  
-# you can add statements to the Lambda function's IAM Role here
-#  iamRoleStatements:
-#    - Effect: "Allow"
-#      Action:
-#        - "s3:ListBucket"
-#      Resource: { "Fn::Join" : ["", ["arn:aws:s3:::", { "Ref" : "ServerlessDeploymentBucket" } ] ]  }
-#    - Effect: "Allow"
-#      Action:
-#        - "s3:PutObject"
-#      Resource:
-#        Fn::Join:
-#          - ""
-#          - - "arn:aws:s3:::"
-#            - "Ref" : "ServerlessDeploymentBucket"
-#            - "/*"
-
-# you can define service wide environment variables here
-#  environment:
-#    variable1: value1
-
-# you can add packaging information here
-#package:
-#  include:
-#    - include-me.py
-#    - include-me-dir/**
-#  exclude:
-#    - exclude-me.py
-#    - exclude-me-dir/**
 
 functions:
   buildSignedUrlUpload:
@@ -320,7 +294,8 @@ resources:
     #           Fn::GetAtt: [ CloudWatchIAMRole , Arn ]
     #         Id:
     #           Ref: CodePipelinePipeline
-#  Outputs:
-#     NewOutput:
-#       Description: "Description for the output"
-#       Value: "Some output value"
+    
+  # Outputs:
+  #   buildSignedUrlUploadURL:
+  #     Description: "buildSignedUrlUpload endpoint"
+  #     Value: buildSignedUrlUpload.endpoint

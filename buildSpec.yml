@@ -5,7 +5,9 @@ phases:
       - pip install -r requirements.txt
       - pip install -U pytest
       - sls plugin install -n serverless-python-requirements
-  build:
+  pre_build:
     commands:
       - python -m pytest
-      - sls deploy --stage dev
+  build:
+    commands:
+      - sls deploy --stage $STAGE
