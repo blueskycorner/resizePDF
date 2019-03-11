@@ -90,6 +90,14 @@ resources:
           Rules:
             - ExpirationInDays: 1
               Status: Enabled
+        CorsConfiguration:
+          CorsRules:
+            - AllowedMethods:
+                - PUT
+              AllowedOrigins:
+                - '*'
+              AllowedHeaders:
+                - '*'
     resizePDFRole:
       Type: AWS::IAM::Role
       Properties:
