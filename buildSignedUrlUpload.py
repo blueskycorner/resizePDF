@@ -30,7 +30,7 @@ def buildSignedUrlUpload(event, context):
         response = {
             "statusCode": 200,
             "body": json.dumps(responseBody),
-            "headers": {},
+            "headers": {"Access-Control-Allow-Origin": "*"},
             "isBase64Encoded": "false"
         }
     except Exception as e:
