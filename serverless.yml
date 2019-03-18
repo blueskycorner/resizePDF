@@ -30,7 +30,7 @@ provider:
 custom:
   resizePDFBucketNameBase: resize-and-pdf
   pythonRequirements:
-    dockerizePip: true
+    dockerizePip: false
   DockerImageArn: !Sub '#{AWS::AccountId}.dkr.ecr.us-east-1.amazonaws.com/codebuild/python-serverless:latest'
   RepositoryName: test-deploy-serverless
   amplify:
@@ -46,6 +46,10 @@ functions:
       - http:
           path: buildSignedUrlUpload
           method: get
+          cors: true
+          authorizer:
+            name: authorizer
+            arn: arn:aws:cognito-idp:us-east-1:315777477680:userpool/us-east-1_1shJPiBk5
           request:
             parameters:
               querystrings:
@@ -63,6 +67,10 @@ functions:
       - http:
           path: resizePDF
           method: get
+          cors: true
+          authorizer:
+            name: authorizer
+            arn: arn:aws:cognito-idp:us-east-1:315777477680:userpool/us-east-1_1shJPiBk5
           request:
             parameters:
               querystrings:
