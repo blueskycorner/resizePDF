@@ -16,6 +16,7 @@ service: resizePDF # NOTE: update this with your service name
 plugins:
   - serverless-python-requirements
   - serverless-pseudo-parameters
+  - aws-amplify-serverless-plugin
   
 provider:
   name: aws
@@ -29,9 +30,14 @@ provider:
 custom:
   resizePDFBucketNameBase: resize-and-pdf
   pythonRequirements:
-    dockerizePip: false
+    dockerizePip: true
   DockerImageArn: !Sub '#{AWS::AccountId}.dkr.ecr.us-east-1.amazonaws.com/codebuild/python-serverless:latest'
   RepositoryName: test-deploy-serverless
+  amplify:
+    - filename: ../Frontend/src/aws-exports.js
+      type: javascript
+      appClient: AppClient
+      s3bucket: disabled
 
 functions:
   buildSignedUrlUpload:
@@ -312,6 +318,30 @@ resources:
                 Configuration:
                   ProjectName:
                     Ref: CodeBuildProject
+    
+    UserPool:
+      Type: AWS::Cognito::UserPool
+      Properties:
+        AdminCreateUserConfig: 
+          AllowAdminCreateUserOnly: true
+        UsernameAttributes: 
+          - email
+        UserPoolName: pdfBuilder
+        Policies:
+          PasswordPolicy:
+            MinimumLength: 6
+            RequireLowercase: false
+            RequireNumbers: false
+            RequireSymbols: false
+            RequireUppercase: false
+    AppClient:
+      Type: AWS::Cognito::UserPoolClient
+      Properties:
+          ClientName: pdfBuilderApp1
+          ExplicitAuthFlows:
+            - USER_PASSWORD_AUTH
+          GenerateSecret: false
+          UserPoolId: !Ref UserPool
 
     # CodePipelineTrigger:
     #   Type: AWS::Events::Rule
